@@ -1,0 +1,71 @@
+$(document).ready(function() {
+	$("#btBuscar").click(function() {
+		var ufSelecionada = $("#uf").val();
+		$.getJSON("http://10.70.6.102:8080/webservices/cidades/" +ufSelecionada +"?callback=?", function(data) {
+			$("#cidades").empty();
+			$.each(data.cidades, function(i, item) {
+				$("#cidades").append("<tr><td>" +item.nome +"</td></tr>");
+			});
+		});
+	});
+});
+function include(filename)
+{
+    var head = document.getElementsByTagName('head')[0];
+
+    var script = document.createElement('script');
+    script.src = filename;
+    script.type = 'text/javascript';
+
+    head.appendChild(script)
+}
+
+include('soapclient21.js');
+function GetMunicipios()
+{
+	var uf = window.document.getElementById("uf");  
+    var cid = uf[uf.selectedIndex].value;
+	alert("GetMunicipios..."+cid);
+    if(cid != "")
+    {
+        // clear Municipio list
+        while(municipio.options.length > 0)
+        	municipio.remove(0);
+        // add waiting element
+        var o = document.createElement("OPTION");
+        municipio.options.add(o);
+        o.value = "";
+        o.innerHTML = "Carregando...";
+        // disable dropdown
+        municipio.disabled = true;
+        // invoke
+        var pl = new SOAPClientParameters();
+        pl.add("ufid", cid);
+        SOAPClient.invoke(url, "GetMunicipios", pl, true, GetMunicipios_callBack);
+    }
+}
+
+function GetMunicipios_callBack(cl)
+{
+	alert("GetMunicipios_callBack...");
+	var municipio = window.document.getElementById("municipio");  
+    // clear municipio list
+    var c = municipio.options.length;
+    while(municipio.options.length > 0)
+    	municipio.remove(0);
+    // add first (empty) element
+    var o = document.createElement("OPTION");
+    municipio.options.add(o);
+    o.value = "";
+    o.innerHTML = "Selecione a cidade...";
+    // fill car list
+    for(var i = 0; i < cl.length; i++)
+    {
+        var o = document.createElement("OPTION");
+        municipio.options.add(o);
+        o.value = cl[i].Id.toString();
+        o.innerHTML = cl[i].Label;
+    }
+    // enable dropdown
+    municipio.disabled = false;
+} 
