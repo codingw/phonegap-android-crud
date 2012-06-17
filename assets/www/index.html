@@ -8,18 +8,31 @@
 	</head>
 	
 	<body>
-	    <div data-role="page" data-theme="b">
+		<div data-role="page" data-theme="b">
 		    <div data-role="header" data-theme="c">
+		    	<p align="center">
+		        	PHONEGAP-ANDROID-CRUD
+		        </p>
 		    </div>
 		 
 		    <div data-role="content">
+	    		<h1 align="center">CADASTRO DE CLIENTES</h1>
+        		<a data-role="button" rel="external" href="form.html" onclick="sessionStorage.removeItem('id');">NOVO</a>
+				
+				<p>CLIENTES CADASTRADOS</p>
+				<ul id="registros" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filtrar..." data-split-icon="delete" data-split-theme="c">
+      			</ul>
 		    </div>
-		    
+		 
 		    <div data-role="footer" data-theme="c">
+		        <p align="center">r.caneppele@gmail.com</p>
+		        <p align="center">twitter.com/rcaneppele</p>
 		    </div>
 		</div>
 		
+		<script type="text/javascript" src="js/cordova-1.8.1.js"></script>
 		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery.mobile-1.1.0.min.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/listagem.js"></script>
 	</body>
 </html>
